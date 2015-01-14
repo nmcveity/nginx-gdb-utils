@@ -3,7 +3,7 @@ import re
 import codecs
 import sys
 
-stdout = codecs.getwriter("utf-8")(sys.stdout)
+stdout = codecs.getwriter("ascii")(sys.stdout)
 
 type_cache = {}
 saved_null = False
@@ -38,7 +38,7 @@ def warn(s):
     gdb.write("WARNING: %s\n" % str(s), gdb.STDERR)
 
 def out(s):
-    stdout.write(s)
+    print(s)
 
 def ptr2int(ptr):
     return int(ptr.cast(typ("uintptr_t")))

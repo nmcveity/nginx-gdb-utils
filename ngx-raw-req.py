@@ -28,7 +28,7 @@ Usage: ngx-raw-req <ngx_http_request>"""
             r = gdb.parse_and_eval(argv[0])
 
         if not r:
-            print "r empty"
+            print("r empty")
             return
 
         ascii_list = []
@@ -57,7 +57,7 @@ Usage: ngx-raw-req <ngx_http_request>"""
         else:
             b = r['main']['header_in']
             if not b:
-                print "not found"
+                print("not found")
             size = r['main']['header_end'] + 2 - request_line['data']
 
         #print "size: %s" % size
@@ -109,7 +109,7 @@ Usage: ngx-raw-req <ngx_http_request>"""
                     ch = ascii_list.pop()
 
                 res = ''.join(map(chr, ascii_list))
-                print res
+                print(res)
 
                 if b == r['main']['header_in']:
                     break
@@ -131,7 +131,7 @@ Usage: ngx-raw-req <ngx_http_request>"""
                 else:
                     ascii_list.append(p)
             res = ''.join(map(chr, ascii_list))
-            print res
+            print(res)
         return
 
 NgxRawReq()

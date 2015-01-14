@@ -6,6 +6,7 @@ import ngxlua
 import string
 import re
 import time
+import inspect
 
 typ = gdbutils.typ
 null = gdbutils.null
@@ -580,6 +581,8 @@ Usage: lvmst [L]"""
         super (lvmst, self).__init__("lvmst", gdb.COMMAND_USER)
 
     def invoke (self, args, from_tty):
+        print(inspect.getsourcefile(out), inspect.getsourcelines(out))
+        out(str("Hey"))
         argv = gdb.string_to_argv(args)
         if len(argv) > 1:
             raise gdb.GdbError("Usage: lvmst [L]")
@@ -591,14 +594,16 @@ Usage: lvmst [L]"""
         else:
             L = get_cur_L()
 
-        #print "g: ", hex(int(L['glref']['ptr32']))
+        print("g: ", hex(int(L['glref']['ptr32'])))
 
         g = G(L)
 
+        print("a")
         vmstate = int(g['vmstate'])
+        print("b", vmstate)
         if vmstate >= 0:
             out("Compiled Lua code (trace #%d)\n" % vmstate)
-
+            print("c")
         elif ~vmstate >= LJ_VMST__MAX:
             raise gdb.GdbError("Invalid VM state: ", ~vmstate)
 
@@ -611,7 +616,11 @@ Usage: lvmst [L]"""
 
         else:
             #print "vmstate = %d" % vmstate
-            out("current VM state: %s\n" % vmstates[~vmstate])
+            print("d", ~vmstate, vmstates, vmstates[~vmstate])
+            print("current VM state: %s\n" % str(vmstates[~vmstate]))
+            print(out)
+            out("current VM state: %s\n" % str(vmstates[~vmstate]))
+            print("e")
 
 lvmst()
 
